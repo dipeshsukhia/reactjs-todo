@@ -7,19 +7,7 @@ const Layout = ({ children }) => {
         <div className="container">
           <div className="navbar-brand">
           React Js Todo
-          </div>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          
+          </div>          
         </div>
       </nav>
       <div className="container" style={{"marginTop": "70px","marginBottom": "70px"}}>
@@ -27,7 +15,7 @@ const Layout = ({ children }) => {
       </div>
       <footer className="navbar fixed-bottom bg-dark text-white justify-content-center">
           Copyright © {new Date().getFullYear()}.
-          All Rights Reserved Dipesh Sukhia.
+          All Rights Reserved &nbsp; <a href="https://dipeshsukhia.github.io/" className=" text-bg-dark" target="_blnk">Dipesh Sukhia.</a>
         </footer>
     </>
   );
