@@ -1,4 +1,5 @@
 import React from "react";
+import { FaRegCheckCircle, FaClock, FaThumbsDown } from "react-icons/fa";
 
 const TodoView = (props) => {
   const { task, StatusEnum } = props;
@@ -44,7 +45,7 @@ const TodoView = (props) => {
               </h5>
               <button
                 type="button"
-                className="btn-close"
+                className="btn-close bg-light"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               />
@@ -55,13 +56,18 @@ const TodoView = (props) => {
                   <h5 className="card-title">{title}</h5>
                 </div>
                 <div className="card-body">
-                  <p className="card-text">{desc}</p>                  
+                  <p className="card-text">{desc}</p>
                 </div>
-                <div className="card-footer bg-dark text-bg-dark">
-                  {new Date(created_date).toLocaleString()} &nbsp;&nbsp;
-                  <span className={`badge bg-${statusClass(status)}`}>
-                      {status.toUpperCase()}
-                    </span>
+                <div className="card-footer bg-dark text-bg-dark">                  
+                  <span
+                    className={`badge bg-${statusClass(status)}`}
+                    title={status.toUpperCase()}
+                  >
+                    {status === StatusEnum.COMPLETE && <FaRegCheckCircle />}
+                    {status === StatusEnum.CANCEL && <FaThumbsDown />}
+                    {status === StatusEnum.PENDING && <FaClock />}
+                  </span>&nbsp;&nbsp;
+                  {new Date(created_date).toLocaleString()}
                 </div>
               </div>
             </div>

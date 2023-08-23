@@ -82,7 +82,7 @@ const TodoForm = (props) => {
               <button
                 ref={formCloseRef}
                 type="button"
-                className="btn-close"
+                className="btn-close bg-light"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               />
