@@ -18,7 +18,7 @@ const TodoTable = (props) => {
             Add
           </button>
         </div>
-        <div className="card-body">
+        <div className="card-body table-responsive">
           <table className="table table-striped">
             <thead>
               <tr className="table-dark">
