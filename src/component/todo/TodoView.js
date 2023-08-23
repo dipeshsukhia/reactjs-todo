@@ -38,7 +38,7 @@ const TodoView = (props) => {
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header bg-dark text-bg-dark">
               <h5 className="modal-title" id="staticBackdropLabel">
                 View Todo
               </h5>

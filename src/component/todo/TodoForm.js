@@ -75,11 +75,9 @@ const TodoForm = (props) => {
       >
         <div className="modal-dialog modal-xl">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header bg-dark text-bg-dark">
               <h5 className="modal-title" id="staticBackdropLabel">
-                {task.id ? "Update Task" : "Create Task"}
-                {/* {JSON.stringify(error)} */}
-                {/* {JSON.stringify(task)} */}
+                {task.id ? "Update Task" : "Create Task"}                
               </h5>
               <button
                 ref={formCloseRef}

@@ -1,5 +1,8 @@
 import React from "react";
 import TodoItem from "./TodoItem";
+import {
+  FaPlus
+} from "react-icons/fa";
 
 const TodoTable = (props) => {
   const { todos, StatusEnum } = props;
@@ -15,7 +18,7 @@ const TodoTable = (props) => {
             onClick={formModal}
             className="p-2 bd-highlight btn btn-success start-0"
           >
-            Add
+            <FaPlus/> &nbsp;Add
           </button>
         </div>
         <div className="card-body table-responsive">

@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  FaTrashAlt,
+  FaRegEdit,
+  FaRegEye,
+  FaRegCheckCircle,
+  FaClock,
+  FaThumbsDown,
+} from "react-icons/fa";
 
 const TodoItem = (props) => {
   const { task, StatusEnum } = props;
@@ -22,9 +30,13 @@ const TodoItem = (props) => {
     <tr>
       <th scope="row">{new Date(created_date).toLocaleString()}</th>
       <td>
-        <span className={`badge bg-${statusClass(status)}`}>
-          {status.toUpperCase()}
+        <h4>
+        <span className={`badge bg-${statusClass(status)}`} title={status.toUpperCase()}>
+          {status === StatusEnum.COMPLETE && <FaRegCheckCircle />}
+          {status === StatusEnum.CANCEL && <FaThumbsDown />}
+          {status === StatusEnum.PENDING && <FaClock />}
         </span>
+        </h4>
       </td>
       <td>{title.substring(0, 25)}...</td>
       <td>{desc.substring(0, 35)}...</td>
@@ -34,6 +46,7 @@ const TodoItem = (props) => {
             if (status !== eStatus) {
               return (
                 <button
+                  title={eStatus.toUpperCase()}
                   key={eStatus}
                   type="button"
                   className={`btn btn-${statusClass(eStatus)}`}
@@ -47,7 +60,9 @@ const TodoItem = (props) => {
                     }
                   }}
                 >
-                  {eStatus}
+                  {eStatus === StatusEnum.COMPLETE && <FaRegCheckCircle />}
+                  {eStatus === StatusEnum.CANCEL && <FaThumbsDown />}
+                  {eStatus === StatusEnum.PENDING && <FaClock />}
                 </button>
               );
             }
@@ -57,20 +72,23 @@ const TodoItem = (props) => {
       <td>
         <div className="btn-group">
           <button
+            title="VIEW"
             type="button"
             className="btn btn-primary"
             onClick={() => viewModal(id)}
           >
-            View
+            <FaRegEye />
           </button>
           <button
+            title="EDIT"
             type="button"
             className="btn btn-warning"
             onClick={() => formModal(id)}
           >
-            Edit
+            <FaRegEdit />
           </button>
           <button
+            title="DELETE"
             type="button"
             className="btn btn-danger"
             onClick={() => {
@@ -79,7 +97,7 @@ const TodoItem = (props) => {
               }
             }}
           >
-            Delete
+            <FaTrashAlt />
           </button>
         </div>
       </td>
