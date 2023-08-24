@@ -51,7 +51,6 @@ const TodoList = () => {
     setTask(initialTask);
     alert("Status successfully updated");
   };
-
   
   const removeTask = (id) => {
     delete todos[id];

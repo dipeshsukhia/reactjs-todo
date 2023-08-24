@@ -1,9 +1,9 @@
 import React from "react";
-import { FaRegCheckCircle, FaClock, FaThumbsDown } from "react-icons/fa";
+import { FaThumbsUp, FaClock, FaThumbsDown } from "react-icons/fa";
 
 const TodoView = (props) => {
   const { task, StatusEnum } = props;
-  const { id, status, title, desc, created_date } = task;
+  const { status, title, desc, created_date } = task;
 
   function statusClass(status) {
     switch (status) {
@@ -37,7 +37,7 @@ const TodoView = (props) => {
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-lg">
+        <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header bg-dark text-bg-dark">
               <h5 className="modal-title" id="staticBackdropLabel">
@@ -63,7 +63,7 @@ const TodoView = (props) => {
                     className={`badge bg-${statusClass(status)}`}
                     title={status.toUpperCase()}
                   >
-                    {status === StatusEnum.COMPLETE && <FaRegCheckCircle />}
+                    {status === StatusEnum.COMPLETE && <FaThumbsUp />}
                     {status === StatusEnum.CANCEL && <FaThumbsDown />}
                     {status === StatusEnum.PENDING && <FaClock />}
                   </span>&nbsp;&nbsp;

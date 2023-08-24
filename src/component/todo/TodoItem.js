@@ -1,9 +1,9 @@
 import React from "react";
 import {
   FaTrashAlt,
-  FaRegEdit,
+  FaEdit,
   FaRegEye,
-  FaRegCheckCircle,
+  FaThumbsUp,
   FaClock,
   FaThumbsDown,
 } from "react-icons/fa";
@@ -32,7 +32,7 @@ const TodoItem = (props) => {
       <td>
         <h4>
         <span className={`badge bg-${statusClass(status)}`} title={status.toUpperCase()}>
-          {status === StatusEnum.COMPLETE && <FaRegCheckCircle />}
+          {status === StatusEnum.COMPLETE && <FaThumbsUp />}
           {status === StatusEnum.CANCEL && <FaThumbsDown />}
           {status === StatusEnum.PENDING && <FaClock />}
         </span>
@@ -60,7 +60,7 @@ const TodoItem = (props) => {
                     }
                   }}
                 >
-                  {eStatus === StatusEnum.COMPLETE && <FaRegCheckCircle />}
+                  {eStatus === StatusEnum.COMPLETE && <FaThumbsUp />}
                   {eStatus === StatusEnum.CANCEL && <FaThumbsDown />}
                   {eStatus === StatusEnum.PENDING && <FaClock />}
                 </button>
@@ -85,7 +85,7 @@ const TodoItem = (props) => {
             className="btn btn-warning"
             onClick={() => formModal(id)}
           >
-            <FaRegEdit />
+            <FaEdit />
           </button>
           <button
             title="DELETE"

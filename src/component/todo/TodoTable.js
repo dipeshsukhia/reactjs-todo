@@ -6,8 +6,8 @@ import {
 
 const TodoTable = (props) => {
   const { todos, StatusEnum } = props;
-  const { formModal, viewModal, updateStatus, removeTask } = props.methods;
-  //console.log(todos)
+  const { formModal } = props.methods;
+  
   return (
     <div>
       <div className="card">
@@ -44,12 +44,7 @@ const TodoTable = (props) => {
                   return (
                     <TodoItem
                       key={taskKey}
-                      methods={{
-                        formModal,
-                        viewModal,
-                        updateStatus,
-                        removeTask,
-                      }}
+                      methods={props.methods}
                       task={taskValue}
                       StatusEnum={StatusEnum}
                     />
