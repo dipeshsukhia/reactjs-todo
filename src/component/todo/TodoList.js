@@ -42,21 +42,25 @@ const TodoList = () => {
   };
 
   const updateStatus = (id, status) => {
-    todos[id] = {
-      ...todos[id],
-      status: status,
-      created_date: new Date().toGMTString(),
-    };
-    localStorage.setItem("todos", JSON.stringify(todos));
-    setTask(initialTask);
-    window.alert("Status successfully updated");
+    if (window.confirm(`Do you want to mark task as ${status} ?`)) {
+      todos[id] = {
+        ...todos[id],
+        status: status,
+        created_date: new Date().toGMTString(),
+      };
+      localStorage.setItem("todos", JSON.stringify(todos));
+      setTask(initialTask);
+      window.alert("Status successfully updated");
+    }
   };
-  
+
   const removeTask = (id) => {
-    delete todos[id];
-    localStorage.setItem("todos", JSON.stringify(todos));
-    setTask(initialTask);
-    window.alert("Status successfully deleted");
+    if (window.confirm("Delete the Task?")) {
+      delete todos[id];
+      localStorage.setItem("todos", JSON.stringify(todos));
+      setTask(initialTask);
+      window.alert("Status successfully deleted");
+    }
   };
 
   useEffect(() => {
@@ -67,7 +71,7 @@ const TodoList = () => {
   return (
     <div className="mt-5">
       <TodoTable
-        methods={{formModal,viewModal,updateStatus,removeTask}}
+        methods={{ formModal, viewModal, updateStatus, removeTask }}
         todos={todos}
         StatusEnum={StatusEnum}
       />
@@ -78,7 +82,7 @@ const TodoList = () => {
         setTask={setTask}
         initialTask={initialTask}
       />
-      <TodoView viewRef={viewRef} task={task} StatusEnum={StatusEnum}/>
+      <TodoView viewRef={viewRef} task={task} StatusEnum={StatusEnum} />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const TodoItem = (props) => {
   const { formModal, viewModal, updateStatus, removeTask } = props.methods;
   const { id, status, title, desc, created_date } = task;
 
-  function statusClass(status) {
+  const statusClass = (status) => {
     switch (status) {
       case StatusEnum.PENDING:
         return "warning";
@@ -24,49 +24,46 @@ const TodoItem = (props) => {
       default:
         return "secondary";
     }
-  }
+  };
+
+  const truncate = (str, maxLength) =>
+    str.length > maxLength ? `${str.substring(0, maxLength)}...` : str;
 
   return (
     <tr>
-      <th scope="row">{new Date(created_date).toLocaleString()}</th>
+      <td>{new Date(created_date).toLocaleString()}</td>
       <td>
         <h4>
-        <span className={`badge bg-${statusClass(status)}`} title={status.toUpperCase()}>
-          {status === StatusEnum.COMPLETE && <FaThumbsUp />}
-          {status === StatusEnum.CANCEL && <FaThumbsDown />}
-          {status === StatusEnum.PENDING && <FaClock />}
-        </span>
+          <span
+            className={`badge bg-${statusClass(status)}`}
+            title={status.toUpperCase()}
+          >
+            {status === StatusEnum.COMPLETE && <FaThumbsUp />}
+            {status === StatusEnum.CANCEL && <FaThumbsDown />}
+            {status === StatusEnum.PENDING && <FaClock />}
+          </span>
         </h4>
       </td>
-      <td>{title.substring(0, 25)}...</td>
-      <td>{desc.substring(0, 35)}...</td>
+      <td>{truncate(title, 25)}</td>
+      <td>{truncate(desc, 35)}</td>
       <td>
         <div className="btn-group">
           {Object.values(StatusEnum).map((eStatus) => {
-            if (status !== eStatus) {
-              return (
-                <button
-                  title={eStatus.toUpperCase()}
-                  key={eStatus}
-                  type="button"
-                  className={`btn btn-${statusClass(eStatus)}`}
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        `Do you want to mark task as ${eStatus} ?`
-                      )
-                    ) {
-                      updateStatus(id, eStatus);
-                    }
-                  }}
-                >
-                  {eStatus === StatusEnum.COMPLETE && <FaThumbsUp />}
-                  {eStatus === StatusEnum.CANCEL && <FaThumbsDown />}
-                  {eStatus === StatusEnum.PENDING && <FaClock />}
-                </button>
-              );
-            }
-            return null
+            return status === eStatus ? null : (
+              <button
+                title={eStatus.toUpperCase()}
+                key={eStatus}
+                type="button"
+                className={`btn btn-${statusClass(eStatus)}`}
+                onClick={() => {
+                  updateStatus(id, eStatus);
+                }}
+              >
+                {eStatus === StatusEnum.COMPLETE && <FaThumbsUp />}
+                {eStatus === StatusEnum.CANCEL && <FaThumbsDown />}
+                {eStatus === StatusEnum.PENDING && <FaClock />}
+              </button>
+            );
           })}
         </div>
       </td>
@@ -93,9 +90,7 @@ const TodoItem = (props) => {
             type="button"
             className="btn btn-danger"
             onClick={() => {
-              if (window.confirm("Delete the Task?")) {
-                removeTask(id);
-              }
+              removeTask(id);
             }}
           >
             <FaTrashAlt />

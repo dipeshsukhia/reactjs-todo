@@ -5,7 +5,7 @@ const TodoView = (props) => {
   const { task, StatusEnum } = props;
   const { status, title, desc, created_date } = task;
 
-  function statusClass(status) {
+  const statusClass = (status) => {
     switch (status) {
       case StatusEnum.PENDING:
         return "warning";
@@ -16,7 +16,7 @@ const TodoView = (props) => {
       default:
         return "secondary";
     }
-  }
+  };
 
   return (
     <div>
@@ -58,7 +58,7 @@ const TodoView = (props) => {
                 <div className="card-body">
                   <p className="card-text">{desc}</p>
                 </div>
-                <div className="card-footer bg-dark text-bg-dark">                  
+                <div className="card-footer bg-dark text-bg-dark">
                   <span
                     className={`badge bg-${statusClass(status)}`}
                     title={status.toUpperCase()}
@@ -66,7 +66,8 @@ const TodoView = (props) => {
                     {status === StatusEnum.COMPLETE && <FaThumbsUp />}
                     {status === StatusEnum.CANCEL && <FaThumbsDown />}
                     {status === StatusEnum.PENDING && <FaClock />}
-                  </span>&nbsp;&nbsp;
+                  </span>
+                  &nbsp;&nbsp;
                   {new Date(created_date).toLocaleString()}
                 </div>
               </div>
