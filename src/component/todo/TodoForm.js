@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useAlert } from "../../context/AlertProvider";
 
 const TodoForm = (props) => {
   const formCloseRef = useRef();
@@ -9,6 +10,7 @@ const TodoForm = (props) => {
   };
   const { task, setTask, StatusEnum, initialTask } = props;
   const [error, setError] = useState(intialError);
+  const { showAlert } = useAlert();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,8 +50,8 @@ const TodoForm = (props) => {
 
       localStorage.setItem("todos", JSON.stringify(savedTodos));
       formCloseRef.current.click();
+      showAlert("success", `Task ${task.id ? 'updated' : 'added'} successfully !!!`);
       setTask(initialTask);
-      window.alert("Data submit successfully");
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TodoTable from "./TodoTable";
 import TodoForm from "./TodoForm";
 import TodoView from "./TodoView";
+import { useAlert } from "../../context/AlertProvider";
 
 const TodoList = () => {
   const StatusEnum = {
@@ -22,6 +23,7 @@ const TodoList = () => {
   const [task, setTask] = useState(initialTask);
   const formRef = useRef();
   const viewRef = useRef();
+  const { showAlert } = useAlert();
 
   const formModal = (id = null) => {
     if (isNaN(id)) {
@@ -50,7 +52,7 @@ const TodoList = () => {
       };
       localStorage.setItem("todos", JSON.stringify(todos));
       setTask(initialTask);
-      window.alert("Status successfully updated");
+      showAlert("success", "Task Status successfully updated !!!");
     }
   };
 
@@ -59,7 +61,7 @@ const TodoList = () => {
       delete todos[id];
       localStorage.setItem("todos", JSON.stringify(todos));
       setTask(initialTask);
-      window.alert("Status successfully deleted");
+      showAlert("success", "Task successfully deleted !!!");
     }
   };
 
@@ -69,7 +71,7 @@ const TodoList = () => {
   }, [task]);
 
   return (
-    <div className="mt-5">
+    <>
       <TodoTable
         methods={{ formModal, viewModal, updateStatus, removeTask }}
         todos={todos}
@@ -83,7 +85,7 @@ const TodoList = () => {
         initialTask={initialTask}
       />
       <TodoView viewRef={viewRef} task={task} StatusEnum={StatusEnum} />
-    </div>
+    </>
   );
 };
 
