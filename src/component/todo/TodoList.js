@@ -49,14 +49,14 @@ const TodoList = () => {
     };
     localStorage.setItem("todos", JSON.stringify(todos));
     setTask(initialTask);
-    alert("Status successfully updated");
+    window.alert("Status successfully updated");
   };
   
   const removeTask = (id) => {
     delete todos[id];
     localStorage.setItem("todos", JSON.stringify(todos));
     setTask(initialTask);
-    alert("Status successfully deleted");
+    window.alert("Status successfully deleted");
   };
 
   useEffect(() => {

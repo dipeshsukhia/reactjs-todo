@@ -49,7 +49,7 @@ const TodoForm = (props) => {
       localStorage.setItem("todos", JSON.stringify(savedTodos));
       formCloseRef.current.click();
       setTask(initialTask);
-      alert("Data submit successfully");
+      window.alert("Data submit successfully");
     }
   };
 

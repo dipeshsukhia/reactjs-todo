@@ -53,7 +53,7 @@ const TodoItem = (props) => {
                   onClick={() => {
                     if (
                       window.confirm(
-                        "Do you want to mark task as " + eStatus + " ?"
+                        `Do you want to mark task as ${eStatus} ?`
                       )
                     ) {
                       updateStatus(id, eStatus);
@@ -66,6 +66,7 @@ const TodoItem = (props) => {
                 </button>
               );
             }
+            return null
           })}
         </div>
       </td>
