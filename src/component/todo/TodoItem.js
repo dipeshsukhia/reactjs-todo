@@ -83,7 +83,7 @@ const TodoItem = (props) => {
           <button
             title="EDIT"
             type="button"
-            className="btn btn-warning"
+            className="btn btn-info"
             onClick={() => formModal(id)}
           >
             <FaEdit />
