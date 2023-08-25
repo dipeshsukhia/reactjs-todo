@@ -113,7 +113,7 @@ const TodoForm = (props) => {
                   </label>
                   <select
                     {...register("status", {
-                      required: "Title is requried.",
+                      required: "Status is requried.",
                     })}
                     className="form-select"
                     id="status"
@@ -138,7 +138,7 @@ const TodoForm = (props) => {
                   </label>
                   <textarea
                     {...register("desc", {
-                      required: "Title is requried.",
+                      required: "Description is requried.",
                       minLength: {
                         value: 5,
                         message: "Minimum 5 Characters requried",
