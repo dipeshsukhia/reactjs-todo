@@ -3,7 +3,6 @@ import { FaThumbsUp, FaClock, FaThumbsDown } from "react-icons/fa";
 
 const TodoView = (props) => {
   const { task, StatusEnum } = props;
-  const { status, title, desc, created_date } = task;
 
   const statusClass = (status) => {
     switch (status) {
@@ -53,22 +52,22 @@ const TodoView = (props) => {
             <div className="modal-body">
               <div className="card text-center">
                 <div className="card-header bg-dark text-bg-dark">
-                  <h5 className="card-title">{title}</h5>
+                  <h5 className="card-title">{task?.title}</h5>
                 </div>
                 <div className="card-body">
-                  <p className="card-text">{desc}</p>
+                  <p className="card-text">{task?.desc}</p>
                 </div>
                 <div className="card-footer bg-dark text-bg-dark">
                   <span
-                    className={`badge bg-${statusClass(status)}`}
-                    title={status.toUpperCase()}
+                    className={`badge bg-${statusClass(task?.status)}`}
+                    title={task?.status.toUpperCase()}
                   >
-                    {status === StatusEnum.COMPLETE && <FaThumbsUp />}
-                    {status === StatusEnum.CANCEL && <FaThumbsDown />}
-                    {status === StatusEnum.PENDING && <FaClock />}
+                    {task?.status === StatusEnum.COMPLETE && <FaThumbsUp />}
+                    {task?.status === StatusEnum.CANCEL && <FaThumbsDown />}
+                    {task?.status === StatusEnum.PENDING && <FaClock />}
                   </span>
                   &nbsp;&nbsp;
-                  {new Date(created_date).toLocaleString()}
+                  {new Date(task?.created_date).toLocaleString()}
                 </div>
               </div>
             </div>

@@ -1,59 +1,50 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 import { useAlert } from "../../context/AlertProvider";
 
 const TodoForm = (props) => {
   const formCloseRef = useRef();
-  const intialError = {
-    status: null,
-    title: null,
-    desc: null,
-  };
-  const { task, setTask, StatusEnum, initialTask } = props;
-  const [error, setError] = useState(intialError);
+  const { task, setTask, StatusEnum } = props;
+  const form = useForm();
+  const { register, handleSubmit,setValue, reset, formState, control  } = form;
+  const { errors } = formState;
   const { showAlert } = useAlert();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    let { status, title, desc } = intialError;
-
-    if (!task.status) {
-      status = "Status is Requried";
+  const onSubmit = async (data) => {
+    let savedTodos = JSON.parse(localStorage.getItem("todos") || "{}");
+    let updatedTask = task;
+    if (!task?.id) {
+      updatedTask = {
+        ...updatedTask,
+        ...data,
+        id: new Date().getTime(),
+        created_date: new Date().toGMTString(),
+      };
+      savedTodos = { [updatedTask.id]: updatedTask, ...savedTodos };
+    } else {
+      updatedTask = {
+        ...updatedTask,
+        ...data,
+      };
+      savedTodos[updatedTask.id] = updatedTask;
     }
-    if (!task.title) {
-      title = "Title is Requried";
-    }
-    if (!task.desc) {
-      desc = "Description is Requried";
-    }
-    setError({
-      status: status,
-      title: title,
-      desc: desc,
-    });
 
-    if (!status && !title && !desc) {
-      let savedTodos = JSON.parse(localStorage.getItem("todos") || "{}");
-      let updatedTask = task;
-
-      // add task
-      if (!task.id) {
-        updatedTask = {
-          ...updatedTask,
-          id: new Date().getTime(),
-          created_date: new Date().toGMTString(),
-        };
-        savedTodos = { [updatedTask.id]: updatedTask, ...savedTodos };
-      } else {
-        savedTodos[updatedTask.id] = updatedTask;
-      }
-
-      localStorage.setItem("todos", JSON.stringify(savedTodos));
-      formCloseRef.current.click();
-      showAlert("success", `Task ${task.id ? 'updated' : 'added'} successfully !!!`);
-      setTask(initialTask);
-    }
+    localStorage.setItem("todos", JSON.stringify(savedTodos));
+    formCloseRef.current.click();
+    showAlert(
+      "success",
+      `Task ${task?.id ? "updated" : "added"} successfully !!!`
+    );
+    setTask(updatedTask);
+    reset();
   };
+  useEffect(() => {
+    setValue("title", task?.title);
+    setValue("status", task?.status ?? StatusEnum.PENDING);
+    setValue("desc", task?.desc);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task]);
 
   return (
     <div>
@@ -79,7 +70,7 @@ const TodoForm = (props) => {
           <div className="modal-content">
             <div className="modal-header bg-dark text-bg-dark">
               <h5 className="modal-title" id="staticBackdropLabel">
-                {task.id ? "Update Task" : "Create Task"}
+                {task?.id ? "Update Task" : "Create Task"}
               </h5>
               <button
                 ref={formCloseRef}
@@ -90,32 +81,40 @@ const TodoForm = (props) => {
               />
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="mb-3">
                   <label htmlFor="Title" className="form-label">
                     Title
                   </label>
                   <input
-                    value={task.title || ""}
-                    onChange={(e) => {
-                      setTask({ ...task, title: e.target.value });
-                    }}
+                    {...register("title", {
+                      required: "Title is requried.",
+                      minLength: {
+                        value: 2,
+                        message: "Minimum 2 Characters requried",
+                      },
+                      maxLength: {
+                        value: 256,
+                        message: "maximum 256 Characters requried",
+                      },
+                    })}
                     type="text"
                     className="form-control"
                     id="title"
                     aria-describedby="title"
                   />
-                  {error.title && <p style={{ color: "red" }}>{error.title}</p>}
+                  {errors.title && (
+                    <p style={{ color: "red" }}>{errors.title?.message}</p>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="Status" className="form-label">
                     Status
                   </label>
                   <select
-                    value={task.status || ""}
-                    onChange={(e) => {
-                      setTask({ ...task, status: e.target.value });
-                    }}
+                    {...register("status", {
+                      required: "Title is requried.",
+                    })}
                     className="form-select"
                     id="status"
                     aria-describedby="title"
@@ -129,8 +128,8 @@ const TodoForm = (props) => {
                       );
                     })}
                   </select>
-                  {error.status && (
-                    <p style={{ color: "red" }}>{error.status}</p>
+                  {errors.status && (
+                    <p style={{ color: "red" }}>{errors.status?.message}</p>
                   )}
                 </div>
                 <div className="mb-3">
@@ -138,19 +137,24 @@ const TodoForm = (props) => {
                     Description
                   </label>
                   <textarea
-                    value={task.desc || ""}
-                    onChange={(e) => {
-                      setTask({ ...task, desc: e.target.value });
-                    }}
+                    {...register("desc", {
+                      required: "Title is requried.",
+                      minLength: {
+                        value: 5,
+                        message: "Minimum 5 Characters requried",
+                      },
+                    })}
                     rows="10"
                     className="form-control"
                     id="desc"
                   />
-                  {error.desc && <p style={{ color: "red" }}>{error.desc}</p>}
+                  {errors.desc && (
+                    <p style={{ color: "red" }}>{errors.desc?.message}</p>
+                  )}
                 </div>
 
                 <button type="submit" className="btn btn-success mx-2 my-2">
-                  {task.id ? "Update" : "Create"}
+                  {task?.id ? "Update" : "Create"}
                 </button>
                 <button
                   type="button"
@@ -161,6 +165,7 @@ const TodoForm = (props) => {
                   Cancel
                 </button>
               </form>
+              <DevTool control={control} />
             </div>
           </div>
         </div>

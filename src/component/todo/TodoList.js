@@ -11,33 +11,22 @@ const TodoList = () => {
     CANCEL: "cancel",
   };
 
-  const initialTask = {
-    id: null,
-    status: StatusEnum.PENDING,
-    title: null,
-    desc: null,
-    created_date: null,
-  };
-
   const [todos, setTodos] = useState([]);
-  const [task, setTask] = useState(initialTask);
+  const [task, setTask] = useState(null);
   const formRef = useRef();
   const viewRef = useRef();
   const { showAlert } = useAlert();
 
   const formModal = (id = null) => {
-    if (isNaN(id)) {
-      setTask(initialTask);
-    } else {
-      setTask(todos[id]);
-    }
-
+    setTask(todos[id] ?? null);
     formRef.current.click();
   };
+
   const viewModal = (id = null) => {
     setTask(todos[id]);
     viewRef.current.click();
   };
+  
   const fetchTodo = () => {
     let savedTodos = JSON.parse(localStorage.getItem("todos") || "{}");
     setTodos(savedTodos);
@@ -51,7 +40,7 @@ const TodoList = () => {
         created_date: new Date().toGMTString(),
       };
       localStorage.setItem("todos", JSON.stringify(todos));
-      setTask(initialTask);
+      setTask(null);
       showAlert("success", "Task Status successfully updated !!!");
     }
   };
@@ -60,7 +49,7 @@ const TodoList = () => {
     if (window.confirm("Delete the Task?")) {
       delete todos[id];
       localStorage.setItem("todos", JSON.stringify(todos));
-      setTask(initialTask);
+      setTask(null);
       showAlert("success", "Task successfully deleted !!!");
     }
   };
@@ -82,7 +71,6 @@ const TodoList = () => {
         StatusEnum={StatusEnum}
         task={task}
         setTask={setTask}
-        initialTask={initialTask}
       />
       <TodoView viewRef={viewRef} task={task} StatusEnum={StatusEnum} />
     </>
