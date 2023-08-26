@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TodoTable from "./TodoTable";
 import TodoForm from "./TodoForm";
 import TodoView from "./TodoView";
-import { useAlert } from "../../context/AlertProvider";
+import Swal from "sweetalert2";
 
 const TodoList = () => {
   const StatusEnum = {
@@ -15,7 +15,6 @@ const TodoList = () => {
   const [task, setTask] = useState(null);
   const formRef = useRef();
   const viewRef = useRef();
-  const { showAlert } = useAlert();
 
   const formModal = (id = null) => {
     setTask(todos[id] ?? null);
@@ -26,32 +25,65 @@ const TodoList = () => {
     setTask(todos[id]);
     viewRef.current.click();
   };
-  
+
   const fetchTodo = () => {
     let savedTodos = JSON.parse(localStorage.getItem("todos") || "{}");
     setTodos(savedTodos);
   };
 
   const updateStatus = (id, status) => {
-    if (window.confirm(`Do you want to mark task as ${status} ?`)) {
-      todos[id] = {
-        ...todos[id],
-        status: status,
-        created_date: new Date().toGMTString(),
-      };
-      localStorage.setItem("todos", JSON.stringify(todos));
-      setTask(null);
-      showAlert("success", "Task Status successfully updated !!!");
-    }
+    Swal.fire({
+      title: `Mark task as ${status}`,
+      text: `Do you want to mark task as ${status} ?`,
+      icon: "question",
+      confirmButtonText: "Yes",
+      showDenyButton: true,
+      denyButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        todos[id] = {
+          ...todos[id],
+          status: status,
+          created_date: new Date().toGMTString(),
+        };
+        localStorage.setItem("todos", JSON.stringify(todos));
+        setTask(todos[id]);
+        Swal.fire({
+          icon: 'success',
+          title: `Task status mark as ${status} !!!`,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    });
   };
 
   const removeTask = (id) => {
-    if (window.confirm("Delete the Task?")) {
-      delete todos[id];
-      localStorage.setItem("todos", JSON.stringify(todos));
-      setTask(null);
-      showAlert("success", "Task successfully deleted !!!");
-    }
+    Swal.fire({
+      title: `Delete`,
+      text: "Are you sure, you want to delete the Task ?",
+      icon: "question",
+      confirmButtonText: "Yes",
+      showDenyButton: true,
+      denyButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let deletedTask = todos[id]
+        delete todos[id];
+        localStorage.setItem("todos", JSON.stringify(todos));
+        // for update task state update created_date
+        setTask({
+          ...deletedTask,
+          created_date: new Date().toGMTString(),
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'Task successfully deleted !!!',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    });
   };
 
   useEffect(() => {

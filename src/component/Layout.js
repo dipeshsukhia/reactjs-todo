@@ -1,5 +1,4 @@
 import React from "react";
-import { AlertProvider } from "../context/AlertProvider";
 import ScrollButton from "./ScrollButton";
 
 const Layout = ({ children }) => {
@@ -14,10 +13,8 @@ const Layout = ({ children }) => {
         className="container"
         style={{ marginTop: "70px", marginBottom: "70px" }}
       >
-        <AlertProvider>
           {children}
           <ScrollButton/>
-        </AlertProvider>
       </div>
       <footer className="navbar fixed-bottom bg-dark text-white justify-content-center">
         Copyright © {new Date().getFullYear()}. All Rights Reserved &nbsp;{" "}

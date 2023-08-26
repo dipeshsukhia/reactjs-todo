@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { useAlert } from "../../context/AlertProvider";
+import Swal from "sweetalert2";
 
 const TodoForm = (props) => {
   const formCloseRef = useRef();
   const { task, setTask, StatusEnum } = props;
   const form = useForm();
-  const { register, handleSubmit,setValue, reset, formState, control  } = form;
+  const { register, handleSubmit, setValue, reset, formState, control } = form;
   const { errors } = formState;
-  const { showAlert } = useAlert();
 
   const onSubmit = async (data) => {
     let savedTodos = JSON.parse(localStorage.getItem("todos") || "{}");
@@ -32,10 +31,12 @@ const TodoForm = (props) => {
 
     localStorage.setItem("todos", JSON.stringify(savedTodos));
     formCloseRef.current.click();
-    showAlert(
-      "success",
-      `Task ${task?.id ? "updated" : "added"} successfully !!!`
-    );
+    Swal.fire({
+      icon: 'success',
+      title: `Task ${task?.id ? "updated" : "added"} successfully !!!`,
+      showConfirmButton: false,
+      timer: 2000
+    })
     setTask(updatedTask);
     reset();
   };
@@ -43,7 +44,7 @@ const TodoForm = (props) => {
     setValue("title", task?.title);
     setValue("status", task?.status ?? StatusEnum.PENDING);
     setValue("desc", task?.desc);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task]);
 
   return (

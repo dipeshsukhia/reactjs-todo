@@ -12,6 +12,7 @@
     "react-hook-form": "^7.45.4",
     "react-icons": "^4.10.1",
     "react-scripts": "5.0.1",
+    "sweetalert2": "^11.7.27",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
