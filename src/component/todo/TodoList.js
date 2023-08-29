@@ -95,7 +95,7 @@ const TodoList = () => {
     <>
       <TodoTable
         methods={{ formModal, viewModal, updateStatus, removeTask }}
-        todos={todos}
+        todos={Object.values(todos)}
         StatusEnum={StatusEnum}
       />
       <TodoForm

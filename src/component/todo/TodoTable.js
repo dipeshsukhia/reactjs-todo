@@ -1,57 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TodoItem from "./TodoItem";
-import {
-  FaPlus
-} from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 const TodoTable = (props) => {
   const { todos, StatusEnum } = props;
   const { formModal } = props.methods;
-  
+  const [filter, setFilter] = useState();
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    setTableData(todos);
+  }, [todos]);
+
+  useEffect(() => {
+    setTableData(
+      todos.filter((task) => {
+        return (
+          task.status.toLowerCase().match(filter.toLowerCase()) ||
+          task.title.toLowerCase().match(filter.toLowerCase()) ||
+          task.desc.toLowerCase().match(filter.toLowerCase())
+        );
+      })
+    );
+  }, [filter]);
+
   return (
     <div>
       <div className="card">
-        <div className="card-header bg-dark text-bg-dark d-flex bd-highlight">
+        <div className="card-header bg-dark text-bg-dark d-sm-flex bd-highlight">
           <div className="flex-grow-1 bd-highlight h3">Todo List</div>
-          <button
-            type="button"
-            onClick={formModal}
-            className="p-2 bd-highlight btn btn-success start-0"
-          >
-            <FaPlus/> &nbsp;Add
-          </button>
+
+          <div className="bd-highlight start-0 mx-2">
+            <div className="input-group">
+              <input
+                value={filter || ""}
+                onChange={(e) => {
+                  setFilter(e.target.value);
+                }}
+                className="form-control border-end-0 border rounded-pill col-xs-6"
+                type="search"
+                defaultValue="search"
+                id="example-search-input"
+              />
+            </div>
+          </div>
+
+          <div className="bd-highlight start-sm-0">
+            <button
+              type="button"
+              onClick={formModal}
+              className="p-2 btn btn-success"
+            >
+              <FaPlus /> &nbsp;Add
+            </button>
+          </div>
         </div>
-        <div className="card-body table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr className="table-dark">
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Mark As</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(todos).length === 0 && (
-                <tr>
-                  <td colSpan="6"> No task Found</td>
+        <div className="card-body shadow">
+          <div className="table-responsive">
+            <table className="table table-striped">
+              <thead>
+                <tr className="table-dark">
+                  <th scope="col">Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Mark As</th>
+                  <th scope="col">Action</th>
                 </tr>
-              )}
-              {Object.entries(todos).length !== 0 &&
-                Object.entries(todos).map(([taskKey, taskValue]) => {
+              </thead>
+              <tbody>
+                {!tableData.length && (
+                  <tr>
+                    <td colSpan="6"> No task Found</td>
+                  </tr>
+                )}
+                {tableData.map((task) => {
                   return (
                     <TodoItem
-                      key={taskKey}
+                      key={task.id}
                       methods={props.methods}
-                      task={taskValue}
+                      task={task}
                       StatusEnum={StatusEnum}
                     />
                   );
                 })}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
