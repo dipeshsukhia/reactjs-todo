@@ -16,9 +16,9 @@ const TodoTable = (props) => {
     setTableData(
       todos.filter((task) => {
         return (
-          task.status.toLowerCase().match(filter.toLowerCase()) ||
-          task.title.toLowerCase().match(filter.toLowerCase()) ||
-          task.desc.toLowerCase().match(filter.toLowerCase())
+          task?.status?.toLowerCase().match(filter?.toLowerCase()) ||
+          task?.title?.toLowerCase().match(filter?.toLowerCase()) ||
+          task?.desc?.toLowerCase().match(filter?.toLowerCase())
         );
       })
     );
@@ -30,30 +30,25 @@ const TodoTable = (props) => {
         <div className="card-header bg-dark text-bg-dark d-sm-flex bd-highlight">
           <div className="flex-grow-1 bd-highlight h3">Todo List</div>
 
-          <div className="bd-highlight start-0 mx-2">
-            <div className="input-group">
-              <input
+          <div className="bd-highlight d-flex start-0">
+            <input
                 value={filter || ""}
                 onChange={(e) => {
                   setFilter(e.target.value);
                 }}
-                className="form-control border-end-0 border rounded-pill col-xs-6"
+                className="form-control border-end-0 border rounded-pill mx-2"
                 type="search"
                 defaultValue="search"
                 id="example-search-input"
               />
-            </div>
-          </div>
-
-          <div className="bd-highlight start-sm-0">
             <button
               type="button"
               onClick={formModal}
-              className="p-2 btn btn-success"
+              className="btn btn-success"
             >
-              <FaPlus /> &nbsp;Add
+              <FaPlus />
             </button>
-          </div>
+          </div>    
         </div>
         <div className="card-body shadow">
           <div className="table-responsive">

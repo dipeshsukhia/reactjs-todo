@@ -4,7 +4,7 @@ import TodoForm from "./TodoForm";
 import TodoView from "./TodoView";
 import Swal from "sweetalert2";
 
-const TodoList = () => {
+const TodoApp = () => {
   const StatusEnum = {
     PENDING: "pending",
     COMPLETE: "complete",
@@ -109,4 +109,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default TodoApp;

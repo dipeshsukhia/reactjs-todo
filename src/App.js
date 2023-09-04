@@ -1,11 +1,11 @@
 import Layout from './component/Layout';
-import TodoList from './component/todo/TodoList';
+import TodoApp from './component/todo/TodoApp';
 
 function App() {
   return (
     <Layout>
-    <TodoList/>
-    </Layout>    
+    <TodoApp/>
+    </Layout>
   );
 }
 
