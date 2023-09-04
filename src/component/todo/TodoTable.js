@@ -38,11 +38,12 @@ const TodoTable = (props) => {
                 }}
                 className="form-control border-end-0 border rounded-pill mx-2"
                 type="search"
-                defaultValue="search"
+                placeholder="Search"
                 id="example-search-input"
               />
             <button
               type="button"
+              title="Add"
               onClick={formModal}
               className="btn btn-success"
             >

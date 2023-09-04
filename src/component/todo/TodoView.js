@@ -55,7 +55,7 @@ const TodoView = (props) => {
                   <h5 className="card-title">{task?.title}</h5>
                 </div>
                 <div className="card-body">
-                  <p className="card-text">{task?.desc}</p>
+                  <pre className="card-text form-control border-0">{task?.desc}</pre>
                 </div>
                 <div className="card-footer bg-dark text-bg-dark">
                   <span
