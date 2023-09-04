@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
           <ScrollButton/>
       </div>
       <footer className="navbar fixed-bottom bg-dark text-white justify-content-center">
-        Copyright © {new Date().getFullYear()}. All Rights Reserved &nbsp;{" "}
+        Copyright © {new Date().getFullYear()}. All Rights Reserved &nbsp;
         <a
           href="https://dipeshsukhia.github.io/"
           className=" text-bg-dark"
