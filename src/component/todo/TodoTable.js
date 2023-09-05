@@ -62,7 +62,7 @@ const TodoTable = (props) => {
               <th scope="col">Status</th>
               <th scope="col">Title</th>
               <th scope="col">Description</th>
-              <th scope="col">Mark As</th>
+              <th scope="col">Mark as</th>
               <th scope="col">Action</th>
             </tr>
           </thead>

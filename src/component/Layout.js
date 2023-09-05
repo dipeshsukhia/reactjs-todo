@@ -5,13 +5,13 @@ import { Container } from "react-bootstrap";
 
 const Layout = ({ children }) => {
   return (
-    <>
+    <div className="bg-body-secondary">
       <Navbar expand="lg" className="navbar-dark bg-dark fixed-top">
         <Container>
           <Navbar.Brand>React Js Todo</Navbar.Brand>
         </Container>
       </Navbar>
-      <Container style={{ marginTop: "70px", marginBottom: "70px" }}>
+      <Container style={{ paddingTop: "70px", paddingBottom: "70px" }}>
         {children}
         <ScrollButton />
       </Container>
@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
           Dipesh Sukhia.
         </a>
       </footer>
-    </>
+    </div>
   );
 };
 
