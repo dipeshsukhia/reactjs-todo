@@ -13,17 +13,17 @@ const TodoApp = () => {
 
   const [todos, setTodos] = useState([]);
   const [task, setTask] = useState(null);
-  const formRef = useRef();
-  const viewRef = useRef();
+  const formRef = useRef(null);
+  const viewRef = useRef(null);
 
   const formModal = (id = null) => {
     setTask(todos[id] ?? null);
-    formRef.current.click();
+    formRef.current.show();
   };
 
   const viewModal = (id = null) => {
     setTask(todos[id]);
-    viewRef.current.click();
+    viewRef.current.show();
   };
 
   const fetchTodo = () => {
@@ -49,11 +49,11 @@ const TodoApp = () => {
         localStorage.setItem("todos", JSON.stringify(todos));
         setTask(todos[id]);
         Swal.fire({
-          icon: 'success',
+          icon: "success",
           title: `Task status mark as ${status} !!!`,
           showConfirmButton: false,
-          timer: 2000
-        })
+          timer: 2000,
+        });
       }
     });
   };
@@ -68,7 +68,7 @@ const TodoApp = () => {
       denyButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        let deletedTask = todos[id]
+        let deletedTask = todos[id];
         delete todos[id];
         localStorage.setItem("todos", JSON.stringify(todos));
         // for update task state update created_date
@@ -77,11 +77,11 @@ const TodoApp = () => {
           created_date: new Date().toGMTString(),
         });
         Swal.fire({
-          icon: 'success',
-          title: 'Task successfully deleted !!!',
+          icon: "success",
+          title: "Task successfully deleted !!!",
           showConfirmButton: false,
-          timer: 2000
-        })
+          timer: 2000,
+        });
       }
     });
   };
@@ -99,12 +99,12 @@ const TodoApp = () => {
         StatusEnum={StatusEnum}
       />
       <TodoForm
-        formRef={formRef}
+        ref={formRef}
         StatusEnum={StatusEnum}
         task={task}
         setTask={setTask}
       />
-      <TodoView viewRef={viewRef} task={task} StatusEnum={StatusEnum} />
+      <TodoView ref={viewRef} task={task} StatusEnum={StatusEnum} />
     </>
   );
 };

@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
+import { CloseButton } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import Card from 'react-bootstrap/Card';
 import { FaThumbsUp, FaClock, FaThumbsDown } from "react-icons/fa";
 
-const TodoView = (props) => {
+const TodoView = forwardRef((props, ref) => {
   const { task, StatusEnum } = props;
+  const [show, setShow] = useState(false);
+
+  // Expose the function through the ref
+  useImperativeHandle(ref, () => ({
+    show: () => setShow(true),
+  }));
 
   const statusClass = (status) => {
     switch (status) {
@@ -18,64 +27,35 @@ const TodoView = (props) => {
   };
 
   return (
-    <div>
-      {/* Button trigger modal */}
-      <button
-        ref={props.viewRef}
-        className="d-none"
-        data-bs-toggle="modal"
-        data-bs-target="#TODOView"
-      ></button>
-      {/* Modal */}
-      <div
-        className="modal fade"
-        id="TODOView"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex={-1}
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-xl">
-          <div className="modal-content">
-            <div className="modal-header bg-dark text-bg-dark">
-              <h5 className="modal-title" id="staticBackdropLabel">
-                View Todo
-              </h5>
-              <button
-                type="button"
-                className="btn-close bg-light"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            <div className="modal-body">
-              <div className="card text-center">
-                <div className="card-header bg-dark text-bg-dark">
-                  <h5 className="card-title">{task?.title}</h5>
-                </div>
-                <div className="card-body">
-                  <pre className="card-text form-control border-0">{task?.desc}</pre>
-                </div>
-                <div className="card-footer bg-dark text-bg-dark">
-                  <span
-                    className={`badge bg-${statusClass(task?.status)}`}
-                    title={task?.status.toUpperCase()}
-                  >
-                    {task?.status === StatusEnum.COMPLETE && <FaThumbsUp />}
-                    {task?.status === StatusEnum.CANCEL && <FaThumbsDown />}
-                    {task?.status === StatusEnum.PENDING && <FaClock />}
-                  </span>
-                  &nbsp;&nbsp;
-                  {new Date(task?.created_date).toLocaleString()}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Modal show={show} onHide={() => setShow(false)} className="modal-xl">
+      <Modal.Header className="modal-header bg-dark text-bg-dark">
+        <Modal.Title>View Todo</Modal.Title>
+        <CloseButton className="bg-light" onClick={() => setShow(false)} />
+      </Modal.Header>
+      <Modal.Body>
+        <Card className="text-center">
+          <Card.Header className="bg-dark text-bg-dark">
+            <Card.Title>{task?.title}</Card.Title>
+          </Card.Header>
+          <Card.Body>
+            <pre className="card-text form-control border-0">{task?.desc}</pre>
+          </Card.Body>
+          <Card.Footer className="bg-dark text-bg-dark">
+            <span
+              className={`badge bg-${statusClass(task?.status)}`}
+              title={task?.status.toUpperCase()}
+            >
+              {task?.status === StatusEnum.COMPLETE && <FaThumbsUp />}
+              {task?.status === StatusEnum.CANCEL && <FaThumbsDown />}
+              {task?.status === StatusEnum.PENDING && <FaClock />}
+            </span>
+            &nbsp;&nbsp;
+            {new Date(task?.created_date).toLocaleString()}
+          </Card.Footer>
+        </Card>
+      </Modal.Body>
+    </Modal>
   );
-};
+});
 
 export default TodoView;
