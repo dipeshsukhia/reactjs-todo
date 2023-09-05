@@ -38,7 +38,7 @@ const TodoView = forwardRef((props, ref) => {
             <Card.Title>{task?.title}</Card.Title>
           </Card.Header>
           <Card.Body>
-            <pre className="card-text form-control border-0">{task?.desc}</pre>
+            <pre className="card-text form-control border-0 text-wrap">{task?.desc}</pre>
           </Card.Body>
           <Card.Footer className="bg-dark text-bg-dark">
             <span
