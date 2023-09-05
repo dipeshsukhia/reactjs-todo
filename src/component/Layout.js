@@ -1,21 +1,20 @@
 import React from "react";
+import Navbar from "react-bootstrap/Navbar";
 import ScrollButton from "./ScrollButton";
+import { Container } from "react-bootstrap";
 
 const Layout = ({ children }) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div className="container">
-          <div className="navbar-brand">React Js Todo</div>
-        </div>
-      </nav>
-      <div
-        className="container"
-        style={{ marginTop: "70px", marginBottom: "70px" }}
-      >
-          {children}
-          <ScrollButton/>
-      </div>
+      <Navbar expand="lg" className="navbar-dark bg-dark fixed-top">
+        <Container>
+          <Navbar.Brand>React Js Todo</Navbar.Brand>
+        </Container>
+      </Navbar>
+      <Container style={{ marginTop: "70px", marginBottom: "70px" }}>
+        {children}
+        <ScrollButton />
+      </Container>
       <footer className="navbar fixed-bottom bg-dark text-white justify-content-center">
         Copyright © {new Date().getFullYear()}. All Rights Reserved &nbsp;
         <a

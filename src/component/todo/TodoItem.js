@@ -1,4 +1,7 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import {
   FaTrashAlt,
   FaEdit,
@@ -34,27 +37,23 @@ const TodoItem = (props) => {
       <td>{new Date(created_date).toLocaleString()}</td>
       <td>
         <h4>
-          <span
-            className={`badge bg-${statusClass(status)}`}
-            title={status.toUpperCase()}
-          >
+          <Badge bg={statusClass(status)} title={status.toUpperCase()}>
             {status === StatusEnum.COMPLETE && <FaThumbsUp />}
             {status === StatusEnum.CANCEL && <FaThumbsDown />}
             {status === StatusEnum.PENDING && <FaClock />}
-          </span>
+          </Badge>
         </h4>
       </td>
       <td>{truncate(title, 25)}</td>
       <td>{truncate(desc, 35)}</td>
       <td>
-        <div className="btn-group">
+        <ButtonGroup>
           {Object.values(StatusEnum).map((eStatus) => {
             return status === eStatus ? null : (
-              <button
+              <Button
                 title={eStatus.toUpperCase()}
                 key={eStatus}
-                type="button"
-                className={`btn btn-${statusClass(eStatus)}`}
+                className={`btn-${statusClass(eStatus)}`}
                 onClick={() => {
                   updateStatus(id, eStatus);
                 }}
@@ -62,40 +61,37 @@ const TodoItem = (props) => {
                 {eStatus === StatusEnum.COMPLETE && <FaThumbsUp />}
                 {eStatus === StatusEnum.CANCEL && <FaThumbsDown />}
                 {eStatus === StatusEnum.PENDING && <FaClock />}
-              </button>
+              </Button>
             );
           })}
-        </div>
+        </ButtonGroup>
       </td>
       <td>
-        <div className="btn-group">
-          <button
+        <ButtonGroup>
+          <Button
             title="VIEW"
-            type="button"
-            className="btn btn-primary"
+            className="btn-primary"
             onClick={() => viewModal(id)}
           >
             <FaRegEye />
-          </button>
-          <button
+          </Button>
+          <Button
             title="EDIT"
-            type="button"
-            className="btn btn-info"
+            className="btn-info"
             onClick={() => formModal(id)}
           >
             <FaEdit />
-          </button>
-          <button
+          </Button>
+          <Button
             title="DELETE"
-            type="button"
-            className="btn btn-danger"
+            className="btn-danger"
             onClick={() => {
               removeTask(id);
             }}
           >
             <FaTrashAlt />
-          </button>
-        </div>
+          </Button>
+        </ButtonGroup>
       </td>
     </tr>
   );
