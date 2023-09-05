@@ -6,6 +6,8 @@ import React, {
 } from "react";
 import { CloseButton } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import Swal from "sweetalert2";
@@ -67,12 +69,11 @@ const TodoForm = forwardRef((props, ref) => {
         <CloseButton className="bg-light" onClick={() => setShow(false)} />
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="mb-3">
-            <label htmlFor="Title" className="form-label">
-              Title
-            </label>
-            <input
+        <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Form.Group className="mb-3">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
               {...register("title", {
                 required: "Title is requried.",
                 minLength: {
@@ -84,26 +85,17 @@ const TodoForm = forwardRef((props, ref) => {
                   message: "maximum 256 Characters requried",
                 },
               })}
-              type="text"
-              className="form-control"
-              id="title"
-              aria-describedby="title"
             />
             {errors.title && (
               <p style={{ color: "red" }}>{errors.title?.message}</p>
             )}
-          </div>
-          <div className="mb-3">
-            <label htmlFor="Status" className="form-label">
-              Status
-            </label>
-            <select
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Status</Form.Label>
+            <Form.Select
               {...register("status", {
                 required: "Status is requried.",
               })}
-              className="form-select"
-              id="status"
-              aria-describedby="title"
             >
               <option value="">Select</option>
               {Object.values(StatusEnum).map((status) => {
@@ -113,16 +105,15 @@ const TodoForm = forwardRef((props, ref) => {
                   </option>
                 );
               })}
-            </select>
+            </Form.Select>
             {errors.status && (
               <p style={{ color: "red" }}>{errors.status?.message}</p>
             )}
-          </div>
-          <div className="mb-3">
-            <label htmlFor="desc" className="form-label">
-              Description
-            </label>
-            <textarea
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
               {...register("desc", {
                 required: "Description is requried.",
                 minLength: {
@@ -131,28 +122,30 @@ const TodoForm = forwardRef((props, ref) => {
                 },
               })}
               rows="10"
-              className="form-control"
-              id="desc"
             />
             {errors.desc && (
               <p style={{ color: "red" }}>{errors.desc?.message}</p>
             )}
-          </div>
-
-          <button type="submit" className="btn btn-success mx-2 my-2">
-            {task?.id ? "Update" : "Create"}
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger mx-2 my-2"
+          </Form.Group>
+          <Button
+            as="input"
+            type="submit"
+            value={task?.id ? "Update" : "Create"}
+            variant="success"
+            className="mx-2 my-2"
+          />
+          <Button
+            as="input"
+            type="reset"
+            value="Cancel"
+            variant="danger"
+            className="mx-2 my-2"
             onClick={() => {
               setShow(false);
               reset();
             }}
-          >
-            Cancel
-          </button>
-        </form>
+          />
+        </Form>
         <DevTool control={control} />
       </Modal.Body>
     </Modal>
