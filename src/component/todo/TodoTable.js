@@ -55,7 +55,7 @@ const TodoTable = (props) => {
         </div>
       </Card.Header>
       <Card.Body className="shadow">
-        <Table responsive striped>
+        <Table responsive striped hover variant="light">
           <thead>
             <tr className="table-dark">
               <th scope="col">Date</th>
@@ -69,7 +69,7 @@ const TodoTable = (props) => {
           <tbody>
             {!tableData.length && (
               <tr>
-                <td colSpan="6"> No task Found</td>
+                <td colSpan="6" align="center"> No task Found</td>
               </tr>
             )}
             {tableData.map((task) => {

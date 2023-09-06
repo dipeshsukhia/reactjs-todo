@@ -34,7 +34,9 @@ function TodoTest() {
   };
 
   const deleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    if (window.confirm("Are you sure you want to delete?")) {
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    }
   };
 
   return (
