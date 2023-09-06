@@ -1,0 +1,34 @@
+table,
+th,
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.todo-list {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.add-todo {
+    display: flex;
+    margin-top: 16px;
+}
+
+.add-todo input {
+    flex: 1;
+    padding: 8px;
+}
+
+.add-todo button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+}
