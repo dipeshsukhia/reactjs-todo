@@ -4,8 +4,9 @@ import ScrollButton from "./ScrollButton";
 import { Container } from "react-bootstrap";
 
 const Layout = ({ children }) => {
+  document.body.classList.add('bg-body-secondary');
   return (
-    <div className="bg-body-secondary">
+    <>
       <Navbar expand="lg" className="navbar-dark bg-dark fixed-top">
         <Container>
           <Navbar.Brand>React Js Todo</Navbar.Brand>
@@ -25,7 +26,7 @@ const Layout = ({ children }) => {
           Dipesh Sukhia.
         </a>
       </footer>
-    </div>
+    </>
   );
 };
 
