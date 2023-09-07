@@ -8,12 +8,6 @@ function TodoTest() {
   const [text, setText] = useState("");
 
   useEffect(() => {
-    // Load todos from local storage when the component mounts
-    const storedTodos = JSON.parse(localStorage.getItem("todos-data")) || [];
-    setTodos(storedTodos);
-  }, []);
-
-  useEffect(() => {
     // Save todos to local storage whenever todos change
     localStorage.setItem("todos-data", JSON.stringify(todos));
   }, [todos]);
@@ -26,8 +20,8 @@ function TodoTest() {
     );
   };
 
-  const addTodo = () => {
-    if (text.trim() === "") return;
+  const addTodo = (e) => {
+    e.preventDefault();
     const newTodo = { id: Date.now(), text, completed: false };
     setTodos([...todos, newTodo]);
     setText("");
@@ -42,16 +36,17 @@ function TodoTest() {
   return (
     <div className="todo-list">
       <h2>To-Do List</h2>
-      <div className="add-todo">
+      <form onSubmit={addTodo} noValidate>
         <input
           type="text"
+          style={{'padding':'5px'}}
           placeholder="Add a new to-do"
           value={text}
           onChange={(e) => setText(e.target.value)}
-        />
-        <button onClick={addTodo}>Add</button>
-      </div>
-      <table className="todo-list">
+        /> &nbsp;
+        <input type="submit" disabled={text.trim() === ""} onClick={addTodo} style={{'padding':'5px'}} value="Add" />
+      </form>
+      <table style={{'marginTop':'10px'}}>
         <thead>
           <tr>
             <th>Complete</th>
@@ -81,7 +76,7 @@ function TodoTest() {
               <td>
                 <input
                   type="button"
-                  value="remove"
+                  value="Remove"
                   onClick={() => deleteTodo(todo.id)}
                 />
               </td>
